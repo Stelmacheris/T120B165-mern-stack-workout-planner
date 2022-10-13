@@ -1,0 +1,29 @@
+Date : 2022-10-13 15:21:26
+Directory : c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\routes
+Total : 5 files,  338 codes, 1 comments, 33 blanks, all 372 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |          5 |        338 |          1 |         33 |        372 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                                          | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                                             |          5 |        338 |          1 |         33 |        372 |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                                                                      | language   | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\routes\comments.js     | JavaScript |        104 |          1 |          5 |        110 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\routes\measurements.js | JavaScript |         53 |          0 |          6 |         59 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\routes\schedule.js     | JavaScript |         59 |          0 |          8 |         67 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\routes\users.js        | JavaScript |         75 |          0 |          8 |         83 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\routes\workouts.js     | JavaScript |         47 |          0 |          6 |         53 |
+| Total                                                                                                                                                         |            |        338 |          1 |         33 |        372 |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

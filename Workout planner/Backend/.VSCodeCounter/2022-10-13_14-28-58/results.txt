@@ -1,0 +1,29 @@
+Date : 2022-10-13 14:28:58
+Directory : c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\models
+Total : 5 files,  75 codes, 0 comments, 19 blanks, all 94 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |          5 |         75 |          0 |         19 |         94 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                                                | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                                                   |          5 |         75 |          0 |         19 |         94 |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                                                                            | language   | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\models\comment.model.js      | JavaScript |         13 |          0 |          4 |         17 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\models\measurements.model.js | JavaScript |         12 |          0 |          4 |         16 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\models\schedule.model.js     | JavaScript |         10 |          0 |          5 |         15 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\models\user.model.js         | JavaScript |         26 |          0 |          3 |         29 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\models\workout.model.js      | JavaScript |         14 |          0 |          3 |         17 |
+| Total                                                                                                                                                               |            |         75 |          0 |         19 |         94 |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
