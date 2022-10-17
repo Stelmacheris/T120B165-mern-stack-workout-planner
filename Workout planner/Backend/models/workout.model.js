@@ -10,7 +10,11 @@ const WorkoutSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  trainer: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 
 module.exports = mongoose.model("Workout", WorkoutSchema);

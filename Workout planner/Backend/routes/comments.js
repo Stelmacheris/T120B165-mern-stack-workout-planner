@@ -25,8 +25,8 @@ router.route("/").post(async (req, res) => {
 
 router.route("/:workoutId/:commentId").put(async (req, res) => {
   if (
-    req.body.name.trim().length === 0 ||
-    req.body.description.trim().length === 0
+    req.body.name?.trim().length === 0 ||
+    req.body.description?.trim().length === 0
   ) {
     res
       .status(400)

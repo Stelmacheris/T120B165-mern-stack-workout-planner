@@ -53,7 +53,7 @@ router.route("/register").post(async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
         await user.save();
-        res.status(200).json({ message: isSave.message, status: 200 });
+        res.status(201).json({ message: isSave.message, status: 200 });
       }
     }
   } catch (e) {
@@ -74,7 +74,7 @@ router.route("/login").post(async (req, res) => {
         .status(400)
         .json({ message: "Wrong login credentials!", status: 400 });
     } else {
-      res.status(200).json({ message: "Login succesfully!", status: 200 });
+      res.status(201).json({ message: "Login succesfully", _id: user[0]._id });
     }
   }
 });

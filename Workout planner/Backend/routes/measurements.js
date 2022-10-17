@@ -28,8 +28,8 @@ router.route("/add").post(async (req, res) => {
 
 router.route("/:id").put(async (req, res) => {
   if (
-    req.body.height.trim().length === 0 ||
-    req.body.weight.trim().length === 0
+    req.body.height?.trim().length === 0 ||
+    req.body.weight?.trim().length === 0
   ) {
     res
       .status(400)
