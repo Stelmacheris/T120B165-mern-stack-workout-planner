@@ -37,7 +37,7 @@ app.use("/", usersRouter);
 app.use("/workout", workoutsRouter);
 app.use("/comments", commentsRouter);
 app.use("/:userId/schedule", schedulesRouter);
-app.use("/:userId/measurements", measurementsRouter);
+app.use("/measurements", measurementsRouter);
 app.use((err, req, res, next) => {
   if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
     res.status(400).json({ message: "Error in body" });
