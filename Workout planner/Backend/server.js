@@ -35,7 +35,7 @@ const measurementsRouter = require("./routes/measurements");
 
 app.use("/", usersRouter);
 app.use("/workout", workoutsRouter);
-app.use("/:userId/comments", commentsRouter);
+app.use("/comments", commentsRouter);
 app.use("/:userId/schedule", schedulesRouter);
 app.use("/:userId/measurements", measurementsRouter);
 app.use((err, req, res, next) => {
