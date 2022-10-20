@@ -12,8 +12,8 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/allworkouts", async (req, res) => {
-  const workouts = await Workout.find({isVerified:true});
-  res.json({ workouts});
+  const workouts = await Workout.find({ isVerified: true });
+  res.json({ workouts });
 });
 
 async function connect() {
@@ -37,9 +37,9 @@ const adminRouter = require("./routes/admin");
 app.use("/", usersRouter);
 app.use("/workout", workoutsRouter);
 app.use("/comments", commentsRouter);
-// app.use("/:userId/schedule", schedulesRouter);
+app.use("/schedule", schedulesRouter);
 app.use("/measurements", measurementsRouter);
-app.use('/admin',adminRouter);
+app.use("/admin", adminRouter);
 app.use((err, req, res, next) => {
   if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
     res.status(400).json({ message: "Error in body" });
