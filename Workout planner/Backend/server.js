@@ -11,11 +11,6 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 
-app.get("/allworkouts", async (req, res) => {
-  const workouts = await Workout.find({ isVerified: true });
-  res.json({ workouts });
-});
-
 async function connect() {
   try {
     await mongoose.connect(process.env.MONGODB_URL);
@@ -33,13 +28,16 @@ const commentsRouter = require("./routes/comments");
 const schedulesRouter = require("./routes/schedule");
 const measurementsRouter = require("./routes/measurements");
 const adminRouter = require("./routes/admin");
-
+app.get("/workout",async(req,res) =>{
+  const workout = await Workout.find({});
+  res.status(200).json(workout);
+})
 app.use("/", usersRouter);
-app.use("/workout", workoutsRouter);
-app.use("/comments", commentsRouter);
+app.use("/sportsman/:sportsmanId/workout", workoutsRouter);
+app.use("/sportsman/:sportsmanId/workout/:workoutId/comments", commentsRouter);
 app.use("/schedule", schedulesRouter);
 app.use("/measurements", measurementsRouter);
-app.use("/admin", adminRouter);
+app.use("/sportsman", adminRouter);
 app.use((err, req, res, next) => {
   if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
     res.status(400).json({ message: "Error in body" });

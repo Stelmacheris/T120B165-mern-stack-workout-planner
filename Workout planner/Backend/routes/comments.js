@@ -2,22 +2,77 @@ const router = require("express").Router();
 let Comment = require("../models/comment.model");
 let Workout = require("../models/workout.model");
 let User = require("../models/user.model");
+let Sportsman = require("../models/sportsman.model")
 
+const {ObjectId} = require('mongodb');
 //Workout comments
-router.route("/:userId/:workoutId").get(async (req, res) => {
-  try {
-    const workout = await Workout.findById(req.params.workoutId);
-    const user = await User.findById(req.params.userId);
-    if (user && workout) {
-      const comments = await Comment.find({ workout: req.params.workoutId });
-      res.status(200).json({ comments });
-    }
-  } catch {
-    res.status(404).json({ message: "User or workout not found" });
-  }
+router.route("/:commentId/").get(async (req, res) => {
+  const sportsmanId = req.baseUrl.split("/");
+  const sportsman1 = sportsmanId[2];
+const workout1 = sportsmanId[4];
+console.log(sportsmanId);
+  console.log(sportsman1,workout1);
+
+     try {
+      const workout = await Workout.findById(workout1);
+    const sportsman = await Sportsman.findById(sportsman1);
+    const comment = await Comment.find({user:sportsman._id,workout:workout._id,_id:req.params.commentId});
+
+      if(workout&&sportsman && comment.length!== 0){
+        res
+          .status(201)
+          .json(comment[0]);
+      }
+      else{
+      res.status(404).json({ message: "Not found" });
+      }
+      
+
+      
+        
+    // } catch {
+    //   res.status(404).json({ message: "User or workout not found1" });
+    // }
+    }catch{
+        res.status(404).json({message:"Not found"})
+      }
 });
 
-router.route("/:userId/:workoutId").post(async (req, res) => {
+router.route("/").get(async (req, res) => {
+  const sportsmanId = req.baseUrl.split("/");
+  const sportsman1 = sportsmanId[2];
+const workout1 = sportsmanId[4];
+console.log(sportsmanId);
+  console.log(sportsman1,workout1);
+
+     try {
+      const workout = await Workout.findById(workout1);
+    const sportsman = await Sportsman.findById(sportsman1);
+    const comments = await Comment.find({user:sportsman._id,workout:workout._id});
+      if(workout&&sportsman){
+        res
+          .status(201)
+          .json(comments);
+      }
+      else{
+      res.status(404).json({ message: "Not found" });
+      }
+        
+    // } catch {
+    //   res.status(404).json({ message: "User or workout not found1" });
+    // }
+    }catch{
+        res.status(404).json({message:"Not found"})
+      }
+});
+
+
+router.route("/").post(async (req, res) => {
+  const sportsmanId = req.baseUrl.split("/");
+  const sportsman1 = sportsmanId[2];
+const workout1 = sportsmanId[4];
+console.log(sportsmanId);
+  console.log(sportsman1,workout1);
   if (
     req.body.name.trim().length === 0 ||
     req.body.description.trim().length === 0 ||
@@ -26,30 +81,37 @@ router.route("/:userId/:workoutId").post(async (req, res) => {
   ) {
     res.status(400).json({ message: "All fields should be not empty!" });
   } else {
-    try {
-      const workout = await Workout.findById(req.params.workoutId);
-      const user = await User.findById(req.params.userId);
+    // try {
+      const workout = await Workout.findById(workout1);
+    const sportsman = await Sportsman.findById(sportsman1);
+
       const comment = new Comment({
         name: req.body.name,
         description: req.body.description,
-        user: req.params.userId,
-        workout: req.params.workoutId,
+        user: sportsman._id,
+        workout: workout._id,
       });
-      if (user && workout) {
+      if(workout&&sportsman){
         await comment.save();
         res
           .status(201)
           .json({ message: "Workout commented", _id: comment._id });
-      } else {
-        res.status(404).json({ message: "User or workout not found" });
       }
-    } catch {
-      res.status(404).json({ message: "User or workout not found1" });
+      else{
+      res.status(404).json({ message: "Not found" });
+
+      }
+        
+    // } catch {
+    //   res.status(404).json({ message: "User or workout not found1" });
+    // }
     }
-  }
 });
 
-router.route("/:userId/:workoutId/:commentId").put(async (req, res) => {
+router.route("/:commentId").put(async (req, res) => {
+  const sportsmanId = req.baseUrl.split("/");
+  const sportsman1 = sportsmanId[2];
+const workout1 = sportsmanId[4];
   if (
     req.body.name === undefined ||
     req.body.description === undefined ||
@@ -61,48 +123,51 @@ router.route("/:userId/:workoutId/:commentId").put(async (req, res) => {
       .json({ message: "All credentials should be not empty!", status: 400 });
   } else {
     try {
-      const comment = await Comment.findById(req.params.commentId);
-      const workout = await Workout.findById(req.params.workoutId);
-      const user = await User.findById(req.params.userId);
-      if (
-        comment.user.toString() === req.params.userId &&
-        comment &&
-        workout &&
-        user
-      ) {
-        const comment = await Comment.findByIdAndUpdate(
+      // const comment = await Comment.find({workout:req.params.workoutId,_id:req.params.commentId});
+      // const workout = await Workout.findById(req.params.workoutId);
+      const workout = await Workout.findById(workout1);
+      const sportsman = await Sportsman.findById(sportsman1);
+      if(workout && sportsman){
+        const comments = await Comment.findByIdAndUpdate(
           req.params.commentId,
           req.body,
           {
             new: true,
           }
         );
-        res.status(200).json({ message: "comment updated" });
-      } else {
-        res.status(400).json({ message: "Not your comment" });
       }
+      else{
+        res.status(404).json({ message: "Not found" });
+      }
+        res.status(200).json({message:"Updated"})
     } catch {
       res.status(404).json({ message: "Not found" });
     }
   }
 });
 
-router.route("/:userId/:workoutId/:commentId").delete(async (req, res) => {
+router.route("/:commentId").delete(async (req, res) => {
   try {
-    const comment = await Comment.findById(req.params.commentId);
-    const workout = await Workout.findById(req.params.workoutId);
-    const user = await User.findById(req.params.userId);
-    if (
-      comment.user.toString() === req.params.userId &&
-      comment &&
-      workout &&
-      user
-    ) {
-      const comment = await Comment.findByIdAndDelete(req.params.commentId);
+    const sportsmanId = req.baseUrl.split("/");
+    const sportsman1 = sportsmanId[2];
+  const workout1 = sportsmanId[4];
+  const workout = await Workout.findById(workout1);
+  const sportsman = await Sportsman.findById(sportsman1);
+
+  if( workout && sportsman)
+  {
+    const comment1 = await Comment.findByIdAndDelete(req.params.commentId);
       res.status(204).json({ message: "comment Deleted" });
-    } else {
-      res.status(400).json({ message: "Not your comment" });
-    }
+  }
+  else{
+    res.status(404).json({ message: "Not found" });
+
+  }
+
+    // const comment = await Comment.find({workout:req.params.workoutId,_id:req.params.commentId});
+    // const workout = await Workout.findById(req.params.workoutId);
+      
+
   } catch {
     res.status(404).json({ message: "Not found" });
   }

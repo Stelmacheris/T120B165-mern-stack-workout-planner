@@ -4,14 +4,14 @@ const { model } = require("mongoose");
 let Schedule = require("../models/schedule.model");
 let Workout = require("../models/workout.model");
 let User = require("../models/user.model");
+const {ObjectId} = require('mongodb');
 
-router.route("/:userId").post(async (req, res) => {
+router.route("/").post(async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
-    console.log(user);
+    const workout = await Workout.findById(req.body.workout);
     const scheduleWorkout = new Schedule({
       date: req.body.date,
-      user: req.params.userId,
+      user: ObjectId("6351b75769c3ee646a031ca0"),
       workout: req.body.workout,
     });
     if (
@@ -37,10 +37,9 @@ router.route("/:userId").post(async (req, res) => {
   }
 });
 
-router.route("/:userId").get(async (req, res) => {
+router.route("/:workoutId").get(async (req, res) => {
   try {
-    const schedule = await Schedule.find({ user: req.params.userId });
-    const user = await User.findById(req.params.userId);
+    const schedule = await Schedule.findById(req.params.workoutId);
     if (schedule) {
       res.status(200).json({ schedule });
     } else {
@@ -51,7 +50,7 @@ router.route("/:userId").get(async (req, res) => {
   }
 });
 
-router.route("/:userId/:scheduleId").put(async (req, res) => {
+router.route("/:scheduleId").put(async (req, res) => {
   try {
     if (
       req.body.date === undefined ||
@@ -61,7 +60,6 @@ router.route("/:userId/:scheduleId").put(async (req, res) => {
     ) {
       res.status(400).json({ message: "All credentials should be not empty!" });
     } else {
-      const user = await User.findById(req.params.userId);
       const schedule = await Schedule.findById(req.params.scheduleId);
       const response = await Schedule.findByIdAndUpdate(
         req.params.scheduleId,
@@ -81,12 +79,11 @@ router.route("/:userId/:scheduleId").put(async (req, res) => {
   }
 });
 
-router.route("/:userId/:scheduleId").delete(async (req, res) => {
+router.route("/:scheduleId").delete(async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
     const schedule = await Schedule.findById(req.params.scheduleId);
 
-    if (user && schedule) {
+    if ( schedule) {
       const response = await Schedule.findByIdAndDelete(req.params.scheduleId);
       res.status(204).json({ message: "Deleted" });
     } else {
