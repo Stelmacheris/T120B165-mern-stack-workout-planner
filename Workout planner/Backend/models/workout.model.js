@@ -14,7 +14,8 @@ const WorkoutSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  sportsman: { type: mongoose.Schema.Types.ObjectId, ref: "Sportsman" },
+
 });
 
 module.exports = mongoose.model("Workout", WorkoutSchema);

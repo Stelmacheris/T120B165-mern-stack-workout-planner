@@ -1,13 +1,15 @@
 const router = require("express").Router();
 let Workout = require("../models/workout.model");
 let User = require("../models/user.model");
+const {ObjectId} = require('mongodb');
+let Sportsman = require("../models/sportsman.model")
 
-router.route("/:userId").post(async (req, res) => {
+router.route("/").post(async (req, res) => {
   // const user = req.params.userId;
   try {
+    const sportsmanId = req.baseUrl.split('/')[2];
+    console.log(sportsmanId)
     const { name, link, description } = req.body;
-    const user = await User.findById(req.params.userId);
-    if (user) {
       if (
         name === undefined ||
         link === undefined ||
@@ -23,64 +25,101 @@ router.route("/:userId").post(async (req, res) => {
         const workout = new Workout({
           name,
           link,
-          user: user,
+          sportsman: sportsmanId,
           description,
           isVerified: false,
         });
-
-        await workout.save();
+        const sportsman = await Sportsman.findById(ObjectId(sportsmanId));
+        if(sportsman !== null){
+          await workout.save();
         res.status(201).json({ message: "Workout added!", _id: workout._id });
-      }
-    } else {
-      res.status(404).json({ message: "User not found" });
-    }
-  } catch {
-    res.status(404).json({ message: "User not found 1" });
-  }
-});
+        }
+        else{
+    res.status(404).json({ message: "Not found" });       
 
-router.route("/:userId").get(async (req, res) => {
-  try {
-    const user = await User.findById(req.params.userId);
-    if (user) {
-      const workouts = await Workout.find({ user: req.params.userId });
-      res.status(200).json({ workouts });
-    } else {
-      res.status(404).json({ message: "User not found" });
+        }
+        
+      }
     }
-  } catch {
+   catch {
     res.status(404).json({ message: "User not found" });
   }
 });
+router.route("/").get(async(req,res) =>{
+  const sportsmanId = req.baseUrl.split('/')[2];00
 
-router.route("/:userId/:workoutId").delete(async (req, res) => {
+  // const workouts = await Workout.find({sportsman:ObjectId(sportsmanId)});
+  // res.json( workouts );
+})
+
+router.route("/:workoutId").get(async (req, res) => {
   try {
-    const workout = await Workout.findById(req.params.workoutId);
-    const user = await User.findById(req.params.userId);
-    if (user) {
-      if (workout) {
-        await Workout.findByIdAndDelete(req.params.workoutId);
-        res.status(204).json({ message: "Deleted succesfully" });
-      } else {
-        res.status(404).json({ message: "Workout not found" });
+  const sportsmanId = req.baseUrl.split('/')[2];
+  const sportsman = await Sportsman.findById(ObjectId(sportsmanId));
+      const workouts = await Workout.find({_id:req.params.workoutId,sportsman:ObjectId(sportsmanId)});
+      
+      if(sportsman && workouts.length !== 0){
+        res.status(200).json( workouts[0] );
       }
-    } else {
-      res.status(404).json({ message: "User not found" });
-    }
+      else{
+    res.status(404).json({ message: "Not found" });       
+      }
+      
   } catch {
-    res.status(404).json({ message: "User or workout not found" });
+    res.status(404).json({ message: "Not found" });
   }
 });
 
-router.route("/:userId/:workoutId").put(async (req, res) => {
+router.route("/").get(async (req, res) => {
   try {
-    const { name, link, description } = req.body;
+  const sportsmanId = req.baseUrl.split('/')[2];
+      const workouts = await Workout.find({_id:req.params.workoutId,sportsman:ObjectId(sportsmanId)});
+      const sportsman = await Sportsman.findById({sportsman:sportsmanId});
+      if(sportsman){
+        res.status(200).json( workouts );
+      }
+      else{
+    res.status(404).json({ message: "Not found" });       
+      }
+      
+  } catch {
+    res.status(404).json({ message: "Not found" });
+  }
+});
 
-    const workout = await Workout.findById(req.params.workoutId);
-    const user = await User.findById(req.params.userId);
-    if (user) {
-      if (workout) {
-        if (
+
+router.route("/:workoutId").delete(async (req, res) => {
+   try {
+    const sportsmanId = req.baseUrl.split('/')[2];
+    const sportsman = await Sportsman.findById(ObjectId(sportsmanId));
+    const workouts = await Workout.find({_id:req.params.workoutId,sportsman:ObjectId(sportsmanId)});
+    console.log(sportsman)
+    if(sportsman){
+ await Sportsman.findByIdAndDelete(ObjectId(sportsman));
+        res.status(204).json({ message: "Deleted succesfully" });
+    }
+    else{
+  res.status(404).json({ message: "Not found" });
+      
+    }
+
+       
+    } 
+   catch {
+    res.status(404).json({ message: "Workout not found" });
+  }
+});
+
+router.route("/:workoutId").put(async (req, res) => {
+  // console.log(req.params.workoutId)
+    try {
+    const { name, link, description } = req.body;
+    const sportsmanId = req.baseUrl.split("/")[2];
+    const sportsman = await Sportsman.findById(ObjectId(sportsmanId));
+    console.log(sportsmanId);
+    console.log(sportsman)
+    if(sportsman){
+      if (
           name === undefined ||
           link === undefined ||
           description === undefined ||
@@ -101,13 +140,15 @@ router.route("/:userId/:workoutId").put(async (req, res) => {
           );
           res.status(200).json({ message: "Updated succesfully!" });
         }
-      } else {
-        res.status(404).json({ message: "Workout not found" });
-      }
-    } else {
-      res.status(404).json({ message: "User not found" });
     }
-  } catch {
+    else{
+  res.status(404).json({ message: "Not found" });
+      
+    }
+        
+
+}
+   catch {
     res.status(404).json({ message: "User or workout not found" });
   }
 });

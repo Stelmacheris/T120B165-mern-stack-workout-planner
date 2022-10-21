@@ -42,22 +42,22 @@ router.route("/register").post(async (req, res) => {
     const usernameExist = await User.find({ username });
     const emailExist = await User.find({ email });
     if (usernameExist.length > 0) {
-      res.status(400).json({ message: "Username exists!", status: 400 });
+      res.status(400).json({ message: "Username exists!"});
     } else if (emailExist.length > 0) {
-      res.status(400).json({ message: "E-mail exists!", status: 400 });
+      res.status(400).json({ message: "E-mail exists!"});
     } else {
       const isSave = isValidRegister(user);
       if (!isSave.toSave) {
-        res.status(400).json({ message: isSave.message, status: 400 });
+        res.status(400).json({ message: isSave.message });
       } else {
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
         await user.save();
-        res.status(201).json({ message: isSave.message, status: 200 });
+        res.status(201).json({ message: isSave.message});
       }
     }
   } catch (e) {
-    res.status(400).json({ message: "Error", status: 400 });
+    res.status(400).json({ message: "Error"});
   }
 });
 
@@ -65,14 +65,14 @@ router.route("/login").post(async (req, res) => {
   const { username, password } = req.body;
   const user = await User.find({ username });
   if (user.length === 0) {
-    res.status(400).json({ error: "User does not exist", status: 400 });
+    res.status(400).json({ error: "User does not exist" });
   } else {
     const dbPassword = user[0].password;
     const validPassword = await bcrypt.compare(password, dbPassword);
     if (!validPassword) {
       res
         .status(400)
-        .json({ message: "Wrong login credentials!", status: 400 });
+        .json({ message: "Wrong login credentials!", });
     } else {
       res.status(201).json({ message: "Login succesfully", _id: user[0]._id });
     }
