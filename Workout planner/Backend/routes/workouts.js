@@ -29,10 +29,14 @@ router.route("/").post(async (req, res) => {
         description,
         isVerified: false,
       });
-      const sportsman = await Sportsman.findById(ObjectId(sportsmanId));
-
+      const sportsman = await Sportsman.findById(sportsmanId);
+      if (sportsman) {
+        const sportsman = await Sportsman.findById(ObjectId(sportsmanId));
+        res.status(201).json(workout);
+      } else {
+        res.status(404).json({ message: "Not found" });
+      }
       await workout.save();
-      res.status(201).json(workout);
     }
   } catch {
     res.status(404).json({ message: "User not found" });
