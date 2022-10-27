@@ -1,22 +1,22 @@
 # Diff Summary
 
-Date : 2022-10-13 14:29:13
+Date : 2022-10-24 00:03:01
 
 Directory c:\\Users\\stelm\\OneDrive - Kaunas University of Technology\\IV kursas-1\\Saityno taikomųjų programų projektavimas\\Workout planner\\Backend\\routes
 
-Total : 9 files,  211 codes, 1 comments, 8 blanks, all 220 lines
+Total : 11 files,  504 codes, 59 comments, 53 blanks, all 616 lines
 
 [Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)
 
 ## Languages
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| JavaScript | 9 | 211 | 1 | 8 | 220 |
+| JavaScript | 11 | 504 | 59 | 53 | 616 |
 
 ## Directories
 | path | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| . | 9 | 211 | 1 | 8 | 220 |
+| . | 11 | 504 | 59 | 53 | 616 |
 | .. | 5 | -75 | 0 | -19 | -94 |
 | ..\\models | 5 | -75 | 0 | -19 | -94 |
 

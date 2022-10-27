@@ -1,0 +1,44 @@
+Date : 2022-10-24 00:03:29
+Directory : c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend
+Total : 16 files,  3334 codes, 59 comments, 101 blanks, all 3494 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          2 |      2,605 |          0 |          2 |      2,607 |
+| JavaScript |         13 |        728 |         59 |         99 |        886 |
+| Properties |          1 |          1 |          0 |          0 |          1 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                                                | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                                                   |         16 |      3,334 |         59 |        101 |      3,494 |
+| models                                                                                                                                                              |          6 |         90 |          0 |         23 |        113 |
+| routes                                                                                                                                                              |          6 |        579 |         59 |         72 |        710 |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                                                                            | language   | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\.env                         | Properties |          1 |          0 |          0 |          1 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\models\comment.model.js      | JavaScript |         13 |          0 |          4 |         17 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\models\measurements.model.js | JavaScript |         12 |          0 |          4 |         16 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\models\schedule.model.js     | JavaScript |         10 |          0 |          5 |         15 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\models\sportsman.model.js    | JavaScript |         11 |          0 |          3 |         14 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\models\user.model.js         | JavaScript |         26 |          0 |          3 |         29 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\models\workout.model.js      | JavaScript |         18 |          0 |          4 |         22 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\package-lock.json            | JSON       |      2,583 |          0 |          1 |      2,584 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\package.json                 | JSON       |         22 |          0 |          1 |         23 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\routes\admin.js              | JavaScript |         89 |         25 |         18 |        132 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\routes\comments.js           | JavaScript |        138 |         15 |         23 |        176 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\routes\measurements.js       | JavaScript |         75 |          0 |          7 |         82 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\routes\schedule.js           | JavaScript |         90 |          0 |          7 |         97 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\routes\users.js              | JavaScript |         75 |          0 |          8 |         83 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\routes\workouts.js           | JavaScript |        112 |         19 |          9 |        140 |
+| c:\Users\stelm\OneDrive - Kaunas University of Technology\IV kursas-1\Saityno taikomųjų programų projektavimas\Workout planner\Backend\server.js                    | JavaScript |         59 |          0 |          4 |         63 |
+| Total                                                                                                                                                               |            |      3,334 |         59 |        101 |      3,494 |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

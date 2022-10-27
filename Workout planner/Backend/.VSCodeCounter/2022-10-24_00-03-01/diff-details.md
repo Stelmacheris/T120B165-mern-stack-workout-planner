@@ -1,10 +1,10 @@
 # Diff Details
 
-Date : 2022-10-13 14:29:13
+Date : 2022-10-24 00:03:01
 
 Directory c:\\Users\\stelm\\OneDrive - Kaunas University of Technology\\IV kursas-1\\Saityno taikomųjų programų projektavimas\\Workout planner\\Backend\\routes
 
-Total : 9 files,  211 codes, 1 comments, 8 blanks, all 220 lines
+Total : 11 files,  504 codes, 59 comments, 53 blanks, all 616 lines
 
 [Summary](results.md) / [Details](details.md) / [Diff Summary](diff.md) / Diff Details
 
@@ -16,9 +16,11 @@ Total : 9 files,  211 codes, 1 comments, 8 blanks, all 220 lines
 | [models/schedule.model.js](/models/schedule.model.js) | JavaScript | -10 | 0 | -5 | -15 |
 | [models/user.model.js](/models/user.model.js) | JavaScript | -26 | 0 | -3 | -29 |
 | [models/workout.model.js](/models/workout.model.js) | JavaScript | -14 | 0 | -3 | -17 |
-| [routes/comments.js](/routes/comments.js) | JavaScript | 104 | 1 | 5 | 110 |
-| [routes/schedule.js](/routes/schedule.js) | JavaScript | 59 | 0 | 8 | 67 |
+| [routes/admin.js](/routes/admin.js) | JavaScript | 89 | 25 | 18 | 132 |
+| [routes/comments.js](/routes/comments.js) | JavaScript | 138 | 15 | 23 | 176 |
+| [routes/measurements.js](/routes/measurements.js) | JavaScript | 75 | 0 | 7 | 82 |
+| [routes/schedule.js](/routes/schedule.js) | JavaScript | 90 | 0 | 7 | 97 |
 | [routes/users.js](/routes/users.js) | JavaScript | 75 | 0 | 8 | 83 |
-| [routes/workouts.js](/routes/workouts.js) | JavaScript | 48 | 0 | 6 | 54 |
+| [routes/workouts.js](/routes/workouts.js) | JavaScript | 112 | 19 | 9 | 140 |
 
 [Summary](results.md) / [Details](details.md) / [Diff Summary](diff.md) / Diff Details
