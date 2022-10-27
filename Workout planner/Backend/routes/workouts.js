@@ -32,7 +32,7 @@ router.route("/").post(async (req, res) => {
       const sportsman = await Sportsman.findById(ObjectId(sportsmanId));
 
       await workout.save();
-      res.status(201).json({ message: "Workout added!", _id: workout._id });
+      res.status(201).json(workout);
     }
   } catch {
     res.status(404).json({ message: "User not found" });
@@ -44,7 +44,11 @@ router.route("/").get(async (req, res) => {
 
     const workouts = await Workout.find({ sportsman: sportsmanId });
     const sportsman = await Sportsman.findById(sportsmanId);
-    res.status(200).json(workouts);
+    if (workouts && sportsman) {
+      res.status(200).json(workouts);
+    } else {
+      res.status(404).json({ message: "Not found" });
+    }
   } catch {
     res.status(404).json({ message: "Not found" });
   }
@@ -58,30 +62,15 @@ router.route("/:workoutId").get(async (req, res) => {
       _id: req.params.workoutId,
       sportsman: ObjectId(sportsmanId),
     });
-    res.status(200).json(workouts[0]);
+    if (workouts[0] && sportsman) {
+      res.status(200).json(workouts[0]);
+    } else {
+      res.status(404).json({ message: "Not found" });
+    }
   } catch {
     res.status(404).json({ message: "Not found" });
   }
 });
-
-// router.route("/").get(async (req, res) => {
-//   // try {
-//   const sportsmanId = req.baseUrl.split("/");
-//   console.log(sportsmanId);
-//   // const workouts = await Workout.find({
-//   //   _id: req.params.workoutId,
-//   //   sportsman: sportsmanId,
-//   // });
-//   // console.log(sportsmanId);
-//   // const sportsman = await Sportsman.find({
-//   //   _id: sportsmanId,
-//   // });
-
-//   //   res.status(200).json(workouts);
-//   // } catch {
-//   //   res.status(404).json({ message: "Not found" });
-//   // }
-// });
 
 router.route("/:workoutId").delete(async (req, res) => {
   try {
@@ -91,9 +80,8 @@ router.route("/:workoutId").delete(async (req, res) => {
       _id: req.params.workoutId,
       sportsman: ObjectId(sportsmanId),
     });
-    console.log(sportsman);
-    if (sportsman) {
-      await Sportsman.findByIdAndDelete(ObjectId(sportsman));
+    if (workouts[0] && sportsman) {
+      await Workout.findByIdAndDelete(workouts[0]._id);
       res.status(204).json({ message: "Deleted succesfully" });
     } else {
       res.status(404).json({ message: "Not found" });
@@ -123,14 +111,22 @@ router.route("/:workoutId").put(async (req, res) => {
         message: "All credentials should be not empty!",
       });
     } else {
-      const workout = await Workout.findByIdAndUpdate(
-        req.params.workoutId,
-        req.body,
-        {
-          new: true,
-        }
-      );
-      res.status(200).json({ message: "Updated succesfully!" });
+      const workouts = await Workout.find({
+        _id: req.params.workoutId,
+        sportsman: ObjectId(sportsmanId),
+      });
+      if (workouts[0] && sportsman) {
+        const workout = await Workout.findByIdAndUpdate(
+          req.params.workoutId,
+          req.body,
+          {
+            new: true,
+          }
+        );
+        res.status(200).json({ message: "Updated succesfully!" });
+      } else {
+        res.status(404).json({ message: "Not found" });
+      }
     }
   } catch {
     res.status(404).json({ message: "User or workout not found" });
