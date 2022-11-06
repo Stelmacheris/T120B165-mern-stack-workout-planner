@@ -7,6 +7,12 @@ const SportsmanSchema = new mongoose.Schema({
   club: {
     type: String,
   },
+  username: {
+    type: String,
+  },
+  password: {
+    type:String,
+  }
 });
 
 SportsmanSchema.set("timestamps", true);

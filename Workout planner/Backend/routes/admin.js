@@ -1,132 +1,152 @@
 const router = require("express").Router();
 let Workout = require("../models/workout.model");
 let User = require("../models/user.model");
-let Sportsman = require("../models/sportsman.model")
-router.route("/").post(async (req,res) =>{
-    try {
-        const { name, club } = req.body;
-          if (
-            name === undefined ||
-            club === undefined ||
-            name.trim().length === 0 ||
-            club.trim().length === 0 
-          ) {
-            res.status(400).json({
-              message: "All credentials should be not empty!",
-            });
-          } else {
-            const sportsman = new Sportsman({
-              name,
-              club
-            });
-    
-            await sportsman.save();
-            res.status(201).json({ message: "Workout added!", _id: sportsman._id });
-          }
-        }
-       catch {
-        res.status(404).json({ message: "Not found" });
-      }
-})
+let Sportsman = require("../models/sportsman.model");
+const validator = require("validator");
+const bcrypt = require("bcrypt");
 
+const isValidRegister = (user) => {
+  if (!validator.isEmail(user.email)) {
+    return {
+      toSave: false,
+      message: "E-mail is not valid!",
+    };
+  }
+
+  if (!validator.isLength(user.password, { min: 6, max: 24 })) {
+    console.log(user.password);
+    return {
+      toSave: false,
+      message: "Password should be between 6 and 24 characters!",
+    };
+  }
+
+  if (!validator.isLength(user.username, { min: 6, max: 24 })) {
+    return {
+      toSave: false,
+      message: "Username should be between 6 and 24 characters!",
+    };
+  }
+
+  return {
+    toSave: true,
+    message: "User added succesfully",
+  };
+};
+
+router.route("/").post(async (req, res) => {
+  //try {
+  const { name, club, username, password, email } = req.body;
+  if (
+    name === undefined ||
+    club === undefined ||
+    name.trim().length === 0 ||
+    club.trim().length === 0 ||
+    username === undefined ||
+    username.trim().length === 0 ||
+    password === undefined ||
+    password.trim().length === 0 ||
+    email === undefined ||
+    email.trim().length === 0
+  ) {
+    res.status(400).json({
+      message: "All credentials should be not empty!",
+    });
+  } else {
+    const sportsman = new Sportsman({
+      name,
+      club,
+      username,
+      password,
+    });
+
+    const user = new User({ username, email, password, userType: "trainer" });
+
+    const usernameExist = await User.find({ username });
+    const emailExist = await User.find({ email });
+    if (usernameExist.length > 0) {
+      res.status(400).json({ message: "Username exists!" });
+    } else if (emailExist.length > 0) {
+      res.status(400).json({ message: "E-mail exists!" });
+    } else {
+      const isSave = isValidRegister(user);
+      if (!isSave.toSave) {
+        res.status(400).json({ message: isSave.message });
+      } else {
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
+        sportsman.password = await bcrypt.hash(password, salt);
+        sportsman._id = user._id;
+        await sportsman.save();
+        await user.save();
+        res.status(201).json(sportsman);
+      }
+    }
+  }
+  // } catch {
+  //   res.status(404).json({ message: "Not found" });
+  // }
+});
 
 router.route("/:sportsmanId").get(async (req, res) => {
-    try {
-        const sportsmans = await Sportsman.findById(req.params.sportsmanId);
-        if(sportsmans.length !== 0){
-            res.status(200).json( sportsmans );
-        }
-        else{
-      res.status(404).json({ message: "Not found" });
-
-        }
-        
-    } catch {
+  try {
+    const sportsmans = await Sportsman.findById(req.params.sportsmanId);
+    if (sportsmans.length !== 0) {
+      res.status(200).json(sportsmans);
+    } else {
       res.status(404).json({ message: "Not found" });
     }
-  });
-  router.route("/").get(async (req, res) => {
-    try {
-        const sportsmans = await Sportsman.find({});
-        res.status(200).json( sportsmans );
-    } catch {
-      res.status(404).json({ message: "Not found" });
-    }
-  });
-  
-  router.route("/:sportsmanId").delete(async (req, res) => {
-    try {
-      const sportsman = await Workout.findById(req.params.sportsmanId);
-
-          await Sportsman.findByIdAndDelete(req.params.sportsmanId);
-          res.status(204).json({ message: "Deleted succesfully" });
-      } 
-     catch {
-      res.status(404).json({ message: "Not found" });
-    }
-  });
-  
-  router.route("/:sportsmanId").put(async (req, res) => {
-    try {
-      const { name, club } = req.body;
-  
-      const sportsman = await Sportsman.findById(req.params.sportsmanId);
-          if (
-            name === undefined ||
-            club === undefined ||
-            name.trim().length === 0 ||
-            club.trim().length === 0 
-          ) {
-            res.status(400).json({
-              message: "All credentials should be not empty!",
-            });
-          } else {
-            const sportsman = await Sportsman.findByIdAndUpdate(
-              req.params.sportsmanId,
-              req.body,
-              {
-                new: true,
-              }
-            );
-            res.status(200).json({ message: "Updated succesfully!" });
-          }
-  
+  } catch {
+    res.status(404).json({ message: "Not found" });
   }
-     catch {
-      res.status(404).json({ message: "User or workout not found" });
+});
+router.route("/").get(async (req, res) => {
+  try {
+    const sportsmans = await Sportsman.find({});
+    res.status(200).json(sportsmans);
+  } catch {
+    res.status(404).json({ message: "Not found" });
+  }
+});
+
+router.route("/:sportsmanId").delete(async (req, res) => {
+  try {
+    const sportsman = await Workout.findById(req.params.sportsmanId);
+
+    await Sportsman.findByIdAndDelete(req.params.sportsmanId);
+    res.status(204).json({ message: "Deleted succesfully" });
+  } catch {
+    res.status(404).json({ message: "Not found" });
+  }
+});
+
+router.route("/:sportsmanId").put(async (req, res) => {
+  try {
+    const { name, club } = req.body;
+
+    const sportsman = await Sportsman.findById(req.params.sportsmanId);
+    if (
+      name === undefined ||
+      club === undefined ||
+      name.trim().length === 0 ||
+      club.trim().length === 0
+    ) {
+      res.status(400).json({
+        message: "All credentials should be not empty!",
+      });
+    } else {
+      const sportsman = await Sportsman.findByIdAndUpdate(
+        req.params.sportsmanId,
+        req.body,
+        {
+          new: true,
+        }
+      );
+      res.status(200).json({ message: "Updated succesfully!" });
     }
-  });
-
-// router.route('/:workoutId').get(async(req,res) =>{
-//     try{
-//         const workouts = await Workout.findById(req.params.workoutId);
-//         res.status(200).json({ workouts});
-//     }
-//     catch{
-//         res.status(404).json({message:"Not found"});
-//     }
-// })
-
-// router.route('/:workoutId').put(async(req,res) =>{
-//     try{
-//     const w = await Workout.findById(req.params.workoutId);
-//     const workout = await Workout.findByIdAndUpdate(
-//         req.params.workoutId,
-//         req.body,
-//         {
-//           new: true,
-//         }
-//       );
-//         res.status(200).json({message:"Updated succesfully"});
-    
-//     }
-//     catch{
-//         res.status(404).json({message:"Not found"});
-//     }
-
-
-
-
-// })
+  } catch {
+    res.status(404).json({ message: "User or workout not found" });
+  }
+});
 
 module.exports = router;
