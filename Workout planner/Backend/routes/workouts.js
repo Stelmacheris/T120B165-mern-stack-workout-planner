@@ -3,10 +3,10 @@ let Workout = require("../models/workout.model");
 let User = require("../models/user.model");
 const { ObjectId } = require("mongodb");
 let Sportsman = require("../models/sportsman.model");
-
-router.route("/").post(async (req, res) => {
-  // const user = req.params.userId;
-  try {
+const verifyToken = require("../verify/verify.js");
+router.route("/").post(verifyToken,async (req, res) => {
+if(req.user.userType === 'trainer' ){
+try {
     const sportsmanId = req.baseUrl.split("/")[2];
     console.log(sportsmanId);
     const { name, link, description } = req.body;
@@ -41,6 +41,11 @@ router.route("/").post(async (req, res) => {
   } catch {
     res.status(404).json({ message: "User not found" });
   }
+}
+else{
+  res.sendStatus(403);
+}
+  
 });
 router.route("/").get(async (req, res) => {
   try {
@@ -76,9 +81,11 @@ router.route("/:workoutId").get(async (req, res) => {
   }
 });
 
-router.route("/:workoutId").delete(async (req, res) => {
-  try {
-    const sportsmanId = req.baseUrl.split("/")[2];
+router.route("/:workoutId").delete(verifyToken,async (req, res) => {
+const sportsmanId = req.baseUrl.split("/")[2];
+console.log(req.user._id,sportsmanId);
+  if(req.user.userType === 'trainer' && sportsmanId === req.user._id){
+    try {
     const sportsman = await Sportsman.findById(ObjectId(sportsmanId));
     const workouts = await Workout.find({
       _id: req.params.workoutId,
@@ -93,13 +100,21 @@ router.route("/:workoutId").delete(async (req, res) => {
   } catch {
     res.status(404).json({ message: "Workout not found" });
   }
+  }
+  else{
+    res.sendStatus(403);
+  }
+  
 });
 
-router.route("/:workoutId").put(async (req, res) => {
+router.route("/:workoutId").put(verifyToken,async (req, res) => {
   // console.log(req.params.workoutId)
-  try {
+  const sportsmanId = req.baseUrl.split("/")[2];
+  if(req.user.userType === 'trainer' && sportsmanId === req.user._id)
+  {
+    try {
     const { name, link, description } = req.body;
-    const sportsmanId = req.baseUrl.split("/")[2];
+    
     const sportsman = await Sportsman.findById(ObjectId(sportsmanId));
     console.log(sportsmanId);
     console.log(sportsman);
@@ -135,5 +150,10 @@ router.route("/:workoutId").put(async (req, res) => {
   } catch {
     res.status(404).json({ message: "User or workout not found" });
   }
+  }
+  else {
+    res.sendStatus(403)
+  }
+  
 });
 module.exports = router;
