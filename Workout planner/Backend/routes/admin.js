@@ -34,7 +34,7 @@ const isValidRegister = (user) => {
   };
 };
 
-router.route("/").post(async (req, res) => {
+router.route("/").post(verifyToken,async (req, res) => {
   if(req.user?.userType !== 'admin'){
     try {
       const { name, club, username, password, email } = req.body;
@@ -106,7 +106,7 @@ router.route("/:sportsmanId").get(verifyToken,async (req, res) => {
   }
   
 });
-router.route("/").get(async (req, res) => {
+router.route("/").get(verifyToken,async (req, res) => {
   try {
     const sportsmans = await Sportsman.find({});
     res.status(200).json(sportsmans);

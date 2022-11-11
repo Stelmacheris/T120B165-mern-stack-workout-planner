@@ -47,7 +47,7 @@ router.route("/").get(verifyToken,async (req, res) => {
     const sportsmanId = req.baseUrl.split("/");
   const sportsman1 = sportsmanId[2];
   const workout1 = sportsmanId[4];
-  try {
+  // try {
     const sportsman = await Sportsman.findById(ObjectId(sportsman1));
     const workouts = await Workout.find({
       _id: ObjectId(workout1),
@@ -55,8 +55,8 @@ router.route("/").get(verifyToken,async (req, res) => {
     });
     if (workouts[0] && sportsman) {
       const comments = await Comment.find({
-        user: sportsman._id,
         workout: workouts[0]._id,
+        trainer:sportsman._id
       });
       if (comments) {
         res.status(200).json(comments);
@@ -64,9 +64,9 @@ router.route("/").get(verifyToken,async (req, res) => {
     } else {
       res.status(404).json({ message: "Not found" });
     }
-  } catch {
-    res.status(404).json({ message: "Not found" });
-  }
+  // } catch {
+  //   res.status(404).json({ message: "Not found1" });
+  // }
   }
   else{
     return req.sendStatus(401);
@@ -143,7 +143,7 @@ router.route("/:commentId").put(verifyToken,async (req, res) => {
 });
 
 router.route("/:commentId").delete(verifyToken,async (req, res) => {
-
+  console.log("tets")
   const sportsmanId = req.baseUrl.split("/");
   const sportsman1 = sportsmanId[2];
   const workout1 = sportsmanId[4];
@@ -159,13 +159,13 @@ router.route("/:commentId").delete(verifyToken,async (req, res) => {
         trainer: sportsman._id,
         workout: workouts[0]._id,
       });
-      console.log(req.user._id, comments[0].user.toString())
+      console.log(comments)
       if(req.user._id === comments[0].user.toString()){
               if (comments.length !== 0) {
         await Comment.findByIdAndDelete(req.params.commentId);
         res.status(204).json({ message: "Deleted succesfully" });
       } else {
-        res.status(404).json({ message: "Not found" });
+        res.status(404).json({ message: "Not found3" });
       }
       }
       else{
@@ -173,10 +173,10 @@ router.route("/:commentId").delete(verifyToken,async (req, res) => {
       }
 
     } else {
-      res.status(404).json({ message: "Not found" });
+      res.status(404).json({ message: "Not found2" });
     }
   } catch {
-    res.status(404).json({ message: "Not found" });
+    res.status(404).json({ message: "Not found1" });
   }
 });
 module.exports = router;

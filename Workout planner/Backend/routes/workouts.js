@@ -29,13 +29,8 @@ try {
         description,
         isVerified: false,
       });
-      const sportsman = await Sportsman.findById(sportsmanId);
-      if (sportsman) {
-        const sportsman = await Sportsman.findById(ObjectId(sportsmanId));
+      const sportsman = await Sportsman.findById(ObjectId(sportsmanId));
         res.status(201).json(workout);
-      } else {
-        res.status(404).json({ message: "Not found" });
-      }
       await workout.save();
     }
   } catch {
@@ -47,8 +42,8 @@ else{
 }
   
 });
-router.route("/").get(async (req, res) => {
-  try {
+router.route("/").get(verifyToken,async (req, res) => {
+  // try {
     const sportsmanId = req.baseUrl.split("/")[2];
 
     const workouts = await Workout.find({ sportsman: sportsmanId });
@@ -58,12 +53,12 @@ router.route("/").get(async (req, res) => {
     } else {
       res.status(404).json({ message: "Not found" });
     }
-  } catch {
-    res.status(404).json({ message: "Not found" });
-  }
+  // } catch {
+  //   res.status(404).json({ message: "Not found" });
+  // }
 });
 
-router.route("/:workoutId").get(async (req, res) => {
+router.route("/:workoutId").get(verifyToken,async (req, res) => {
   try {
     const sportsmanId = req.baseUrl.split("/")[2];
     const sportsman = await Sportsman.findById(ObjectId(sportsmanId));

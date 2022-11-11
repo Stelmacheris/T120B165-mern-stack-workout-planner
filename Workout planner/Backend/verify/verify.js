@@ -15,7 +15,7 @@ const verify = (req,res,next) =>{
       });
     }
     else{
-      return res.status(401);
+      return res.sendStatus(401);
     }
   }
 module.exports =  verify;
