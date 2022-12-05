@@ -1,16 +1,24 @@
-import { user } from "../authorization/User";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 
 const NavigationBar = () => {
+  const token = localStorage.getItem("accessToken");
+  const user = jwtDecode(token);
+  const navigate = useNavigate();
+  const logoutHandler = () => {
+    localStorage.removeItem("accessToken");
+    navigate("/");
+  };
   return (
     <Navbar bg="primary" variant="dark">
       <Container>
         <Navbar.Brand href="#home">Workout Planner</Navbar.Brand>
-        <Nav className="me-auto">
-          {user.userType === "admin" ? (
+        {user.userType === "admin" ? (
+          <Nav className="me-auto">
+            (
             <Nav.Link>
               <Link
                 style={{ color: "white", textDecoration: "none" }}
@@ -19,25 +27,34 @@ const NavigationBar = () => {
                 Sportsmans
               </Link>
             </Nav.Link>
+            )
+          </Nav>
+        ) : null}
+
+        <Nav className="me-auto">
+          {user.userType === "trainer" ? (
+            <Nav.Link>
+              <Link
+                style={{ color: "white", textDecoration: "none" }}
+                to="/workout"
+              >
+                Workouts
+              </Link>
+            </Nav.Link>
           ) : null}
-          <Nav.Link>
-            <Link
-              style={{ color: "white", textDecoration: "none" }}
-              href="#features"
-            >
-              Features
-            </Link>
-          </Nav.Link>
-          <Nav.Link>
-            <Link
-              style={{ color: "white", textDecoration: "none" }}
-              href="#pricing"
-            >
-              Pricing
-            </Link>
-          </Nav.Link>
         </Nav>
       </Container>
+      <Nav.Link
+        onClick={logoutHandler}
+        style={{
+          color: "white",
+          textDecoration: "none",
+          marginRight: "20px",
+          fontSize: "16px",
+        }}
+      >
+        Logout
+      </Nav.Link>
     </Navbar>
   );
 };

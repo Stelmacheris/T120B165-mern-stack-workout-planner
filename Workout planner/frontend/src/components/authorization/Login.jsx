@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import useAxios from "../../hooks/useAxios";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [loginInfo, setLoginInfo] = useState({
     username: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const [error, setError] = useState(false);
   const submitHandler = async (e) => {
@@ -19,6 +21,7 @@ const Login = () => {
       );
       localStorage.removeItem("accessToken");
       localStorage.setItem("accessToken", response.data.accessToken);
+      navigate("/home");
       setError(false);
     } catch (e) {
       setError(true);

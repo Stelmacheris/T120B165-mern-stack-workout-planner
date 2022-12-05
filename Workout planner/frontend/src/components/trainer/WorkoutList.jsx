@@ -10,19 +10,25 @@ import { redirect, useNavigate, Link } from "react-router-dom";
 import Forbidden403 from "../ErrorPages/Forbidden403";
 import NoAuthorized401 from "../ErrorPages/NoAuthorized401";
 import jwt_decode from "jwt-decode";
-const SportsmanList = () => {
-  const navigate = useNavigate();
-  const { data, loading, response } = useAxios("/sportsman", "GET", "", {
-    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-  });
 
+const WorkoutList = () => {
+  const navigate = useNavigate();
   const token = localStorage.getItem("accessToken");
   const user = jwt_decode(token);
+
+  const { data, loading, response } = useAxios(
+    `/sportsman/${user._id}/workout`,
+    "GET",
+    "",
+    {
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    }
+  );
 
   const deleteHandler = async (id) => {
     try {
       const response = await axios.delete(
-        "http://13.51.172.212:3000/sportsman/" + id,
+        `http://13.51.172.212:3000/sportsman/${user._id}/workout/` + id,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -37,42 +43,39 @@ const SportsmanList = () => {
   const mapData = data.map((d) => {
     return (
       <tr key={d._id}>
-        <td>{d.username}</td>
-        <td>{d.club}</td>
         <td>{d.name}</td>
-        {user.userType == "admin" ? (
-          <td colSpan={2}>
-            (
-            <>
-              <Link
-                to={{
-                  pathname: "/sportsman/" + d._id,
-                }}
-                state={{ data: d }}
-              >
-                <Button className="m-1">Edit</Button>
-              </Link>
-              <Button
-                onClick={() => {
-                  deleteHandler(d._id);
-                }}
-                variant="danger"
-                className="m-1"
-              >
-                Delete
-              </Button>
-            </>
-            ){" "}
-          </td>
-        ) : null}
+        <td>{d.link}</td>
+        <td>{d.description}</td>
+        <td colSpan={2}>
+          (
+          <>
+            <Link
+              to={{
+                pathname: `/workout/` + d._id,
+              }}
+              state={{ data: d }}
+            >
+              <Button className="m-1">Edit</Button>
+            </Link>
+            <Button
+              onClick={() => {
+                deleteHandler(d._id);
+              }}
+              variant="danger"
+              className="m-1"
+            >
+              Delete
+            </Button>
+          </>
+          )
+        </td>
       </tr>
     );
   });
 
   const navigateHandler = () => {
-    navigate("/sportsman/add");
+    navigate("/workout/add");
   };
-
   return (
     <>
       {response == 403 ? (
@@ -80,11 +83,11 @@ const SportsmanList = () => {
       ) : token ? (
         <>
           <NavigationBar />
-          <AddButton addHandler={navigateHandler} text="Add Sportsman" />
+          <AddButton addHandler={navigateHandler} text="Add Workout" />
           {data.length !== 0 ? (
             <DataTable
               mapData={mapData}
-              header={["Username", "Club", "Name"]}
+              header={["Name", "Link", "Description"]}
             />
           ) : (
             <p>No Data</p>
@@ -96,4 +99,5 @@ const SportsmanList = () => {
     </>
   );
 };
-export default SportsmanList;
+
+export default WorkoutList;
