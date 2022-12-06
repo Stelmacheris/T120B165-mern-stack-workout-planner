@@ -15,7 +15,9 @@ const NavigationBar = () => {
   return (
     <Navbar bg="primary" variant="dark">
       <Container>
-        <Navbar.Brand href="#home">Workout Planner</Navbar.Brand>
+        <Link to="/home">
+          <Navbar.Brand>Workout Planner</Navbar.Brand>
+        </Link>
         {user.userType === "admin" ? (
           <Nav className="me-auto">
             (

@@ -46,29 +46,31 @@ const WorkoutList = () => {
         <td>{d.name}</td>
         <td>{d.link}</td>
         <td>{d.description}</td>
-        <td colSpan={2}>
-          (
-          <>
-            <Link
-              to={{
-                pathname: `/workout/` + d._id,
-              }}
-              state={{ data: d }}
-            >
-              <Button className="m-1">Edit</Button>
-            </Link>
-            <Button
-              onClick={() => {
-                deleteHandler(d._id);
-              }}
-              variant="danger"
-              className="m-1"
-            >
-              Delete
-            </Button>
-          </>
-          )
-        </td>
+        {user.userType == "trainer" ? (
+          <td colSpan={2}>
+            (
+            <>
+              <Link
+                to={{
+                  pathname: `/workout/` + d._id,
+                }}
+                state={{ data: d }}
+              >
+                <Button className="m-1">Edit</Button>
+              </Link>
+              <Button
+                onClick={() => {
+                  deleteHandler(d._id);
+                }}
+                variant="danger"
+                className="m-1"
+              >
+                Delete
+              </Button>
+            </>
+            )
+          </td>
+        ) : null}
       </tr>
     );
   });

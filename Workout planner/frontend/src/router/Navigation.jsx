@@ -9,12 +9,17 @@ import FirstPage from "../components/Main/FirstPage";
 import WorkoutList from "../components/trainer/WorkoutList";
 import AddWorkout from "../components/trainer/AddWorkout";
 import UpdateWorkout from "../components/trainer/UpdateWorkout";
+import AllWorkout from "../components/Main/AllWorkout";
 
 const Navigation = () => {
   return (
     <Routes>
       <Route path="/" element={<FirstPage />} />
-      <Route path="/home" element={<Home />} />
+      <Route path="/home">
+        <Route index element={<Home />} />
+        <Route path=":id" element={<AllWorkout />} />
+      </Route>
+
       <Route path="/login" element={<Login />} />
       <Route path="/sportsman">
         <Route index element={<SportsmanList />} />
