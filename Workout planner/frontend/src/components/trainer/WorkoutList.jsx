@@ -48,7 +48,6 @@ const WorkoutList = () => {
         <td>{d.description}</td>
         {user.userType == "trainer" ? (
           <td colSpan={2}>
-            (
             <>
               <Link
                 to={{
@@ -68,7 +67,6 @@ const WorkoutList = () => {
                 Delete
               </Button>
             </>
-            )
           </td>
         ) : null}
       </tr>

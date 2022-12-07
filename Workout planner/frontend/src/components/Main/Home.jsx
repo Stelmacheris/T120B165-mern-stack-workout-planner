@@ -3,6 +3,7 @@ import SportsmanCard from "../common/Card/SportsmanCard";
 import NavigationBar from "../navbar/NavigationBar";
 import useAxios from "../../hooks/useAxios";
 import { Link } from "react-router-dom";
+import Logo from "../../assets/stronger-than-yesterday-svg.svg";
 const Home = () => {
   const token = localStorage.getItem("accessToken");
   const user = jwt_decode(token);
@@ -40,6 +41,7 @@ const Home = () => {
   return (
     <>
       <NavigationBar />
+      <img src={Logo} alt="React Logo" />
       <div className="container pt-4">
         <div className="row">{mapData}</div>
       </div>

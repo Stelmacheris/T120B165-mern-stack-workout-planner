@@ -42,7 +42,6 @@ const SportsmanList = () => {
         <td>{d.name}</td>
         {user.userType == "admin" ? (
           <td colSpan={2}>
-            (
             <>
               <Link
                 to={{
@@ -62,7 +61,6 @@ const SportsmanList = () => {
                 Delete
               </Button>
             </>
-            ){" "}
           </td>
         ) : null}
       </tr>
