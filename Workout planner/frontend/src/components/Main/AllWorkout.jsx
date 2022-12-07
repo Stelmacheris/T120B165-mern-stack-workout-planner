@@ -7,7 +7,6 @@ import SportsmanCard from "../common/Card/SportsmanCard";
 const AllWorkout = () => {
   const location = useLocation();
   const sportsman = location.state.data;
-
   const { data, loading, response } = useAxios(
     "/sportsman/" + sportsman._id + "/workout",
     "GET",
@@ -16,7 +15,6 @@ const AllWorkout = () => {
       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
     }
   );
-  console.log(data);
 
   const mapData = data.map((d, i) => (
     <div className="col-4">
@@ -24,9 +22,10 @@ const AllWorkout = () => {
         <Link
           className="text-decoration-none"
           to={{
-            pathname: "/home/" + d._id,
+            pathname:
+              "/home/" + sportsman._id + "/workouts/" + d._id + "/comments",
           }}
-          state={{ data: d }}
+          state={{ workout: d, sportsman }}
         >
           <WorkoutCard
             name={d.name}

@@ -10,6 +10,9 @@ import WorkoutList from "../components/trainer/WorkoutList";
 import AddWorkout from "../components/trainer/AddWorkout";
 import UpdateWorkout from "../components/trainer/UpdateWorkout";
 import AllWorkout from "../components/Main/AllWorkout";
+import AllComments from "../components/Main/AllComments";
+import AddComments from "../components/comments/AddComments";
+import EditComment from "../components/comments/EditComment";
 
 const Navigation = () => {
   return (
@@ -17,7 +20,19 @@ const Navigation = () => {
       <Route path="/" element={<FirstPage />} />
       <Route path="/home">
         <Route index element={<Home />} />
-        <Route path=":id" element={<AllWorkout />} />
+        <Route path=":id/workouts" element={<AllWorkout />} />
+        <Route
+          path=":id/workouts/:workoutsid/comments"
+          element={<AllComments />}
+        />
+        <Route
+          path=":id/workouts/:workoutsid/comments/add"
+          element={<AddComments />}
+        />
+        <Route
+          path=":id/workouts/:workoutsid/comments/:commentId"
+          element={<EditComment />}
+        />
       </Route>
 
       <Route path="/login" element={<Login />} />

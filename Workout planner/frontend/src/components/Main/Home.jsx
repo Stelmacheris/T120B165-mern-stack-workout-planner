@@ -16,7 +16,7 @@ const Home = () => {
         <Link
           className="text-decoration-none"
           to={{
-            pathname: "/home/" + d._id,
+            pathname: "/home/" + d._id + "/workouts",
           }}
           state={{ data: d }}
         >
