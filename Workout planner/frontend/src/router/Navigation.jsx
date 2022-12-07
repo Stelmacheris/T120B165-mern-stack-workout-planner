@@ -13,6 +13,9 @@ import AllWorkout from "../components/Main/AllWorkout";
 import AllComments from "../components/Main/AllComments";
 import AddComments from "../components/comments/AddComments";
 import EditComment from "../components/comments/EditComment";
+import MeasurementList from "../components/measurement/MeasurementList";
+import AddMeasurement from "../components/measurement/AddMeasurement";
+import UpdateMeasurement from "../components/measurement/UpdateMeasurement";
 
 const Navigation = () => {
   return (
@@ -35,7 +38,6 @@ const Navigation = () => {
         />
       </Route>
 
-      <Route path="/login" element={<Login />} />
       <Route path="/sportsman">
         <Route index element={<SportsmanList />} />
         <Route path="add" element={<AddSportsman />} />
@@ -48,6 +50,13 @@ const Navigation = () => {
         <Route path=":id" element={<UpdateWorkout />} />
       </Route>
 
+      <Route path="/measurement">
+        <Route index element={<MeasurementList />} />
+        <Route path="add" element={<AddMeasurement />} />
+        <Route path=":id" element={<UpdateMeasurement />} />
+      </Route>
+
+      <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
     </Routes>
   );

@@ -7,7 +7,7 @@ const MeasurementSchema = new mongoose.Schema({
   weight: {
     type: Number,
   },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 
 MeasurementSchema.set("timestamps", true);

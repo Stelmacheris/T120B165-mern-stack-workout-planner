@@ -2,80 +2,88 @@ const router = require("express").Router();
 let Measurement = require("../models/measurements.model");
 let Workout = require("../models/workout.model");
 let User = require("../models/user.model");
-const {ObjectId} = require('mongodb');
+const verifyToken = require("../verify/verify.js");
+const { ObjectId } = require("mongodb");
 
-router.route("/:id").get(async (req, res) => {
+router.route("/:id").get(verifyToken, async (req, res) => {
   try {
-    const measurements = await Measurement.findById(req.params.id);
-    res.status(200).json({ measurements });
+    const measurement = await Measurement.findById(req.params.id);
+    if (measurement) {
+      res.status(200).json(measurement);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch {
+    res.status(404).json({ message: "User not found" });
+  }
+});
+router.route("/").get(verifyToken, async (req, res) => {
+  try {
+    const measurements = await Measurement.find({ userId: req.user._id });
+    res.status(200).json(measurements);
   } catch {
     res.status(404).json({ message: "User not found" });
   }
 });
 
-router.route("/").post(async (req, res) => {
+router.route("/").post(verifyToken, async (req, res) => {
   try {
     if (
       req.body.height.trim().length === 0 ||
-      req.body.weight.trim().length === 0 ||
-      req.body.height === undefined ||
-      req.body.weight === undefined
+      req.body.weight.trim().length === 0
     ) {
-      res
-        .status(400)
-        .json({ message: "All credentials should be not empty!", status: 400 });
+      res.sendStatus(400);
     } else {
       const measurement = new Measurement({
         height: req.body.height,
         weight: req.body.weight,
-        user: ObjectId("6351b75769c3ee646a031ca0"),
+        userId: req.user._id,
       });
       await measurement.save();
-      res
-        .status(201)
-        .json({ message: "New measurement saved!", _id: measurement._id });
+      res.status(201).json(measurement);
     }
   } catch {
-    res.status(404).json({ message: "User not found" });
+    res.sendStatus(404);
   }
 });
 
-router.route("/:measurementId").put(async (req, res) => {
+router.route("/:measurementId").put(verifyToken, async (req, res) => {
   try {
-    const measurement = await User.findById(req.params.measurementId);
-
+    const measurement = await Measurement.findById(req.params.measurementId);
     if (
       req.body.height.trim().length === 0 ||
       req.body.weight.trim().length === 0 ||
       req.body.height === undefined ||
       req.body.weight === undefined
     ) {
-      res
-        .status(400)
-        .json({ message: "All credentials should be not empty!", status: 400 });
+      res.sendStatus(400);
     } else {
-      const measurements = await Measurement.findByIdAndUpdate(
-        req.params.measurementId,
-        req.body,
-        {
-          new: true,
-        }
-      );
-      res.status(200).json({ message: "Updated succesfully!" });
+      if (measurement) {
+        const measurements = await Measurement.findByIdAndUpdate(
+          req.params.measurementId,
+          req.body,
+          {
+            new: true,
+          }
+        );
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(404);
+      }
     }
-  } catch {
-    res.status(404).json({ message: "User or measurement not found" });
-  }
+  } catch {}
 });
 
 router.route("/:measurementId").delete(async (req, res) => {
   try {
-    const measurement = await User.findById(req.params.measurementId);
-    await Measurement.findByIdAndDelete(req.params.measurementId);
-    res.status(204).json({ message: "Deleted succesfully" });
-  } catch {
-    res.status(404).json({ message: "User or measurement not found" });
-  }
+    const measurement = await Measurement.findById(req.params.measurementId);
+    if (measurement) {
+      await Measurement.findByIdAndDelete(req.params.measurementId);
+      res.sendStatus(204);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch {}
 });
 
 module.exports = router;

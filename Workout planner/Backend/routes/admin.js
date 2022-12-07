@@ -34,8 +34,8 @@ const isValidRegister = (user) => {
   };
 };
 
-router.route("/").post(verifyToken,async (req, res) => {
-  if(req.user?.userType !== 'admin'){
+router.route("/").post(verifyToken, async (req, res) => {
+  if (req.user?.userType !== "admin") {
     try {
       const { name, club, username, password, email } = req.body;
       if (
@@ -60,9 +60,14 @@ router.route("/").post(verifyToken,async (req, res) => {
           username,
           password,
         });
-    
-        const user = new User({ username, email, password, userType: "trainer" });
-    
+
+        const user = new User({
+          username,
+          email,
+          password,
+          userType: "trainer",
+        });
+
         const usernameExist = await User.find({ username });
         const emailExist = await User.find({ email });
         if (usernameExist.length > 0) {
@@ -84,17 +89,16 @@ router.route("/").post(verifyToken,async (req, res) => {
           }
         }
       }
-      } catch {
-        res.status(404).json({ message: "Not found" });
-      }
-  }
-  else{
+    } catch {
+      res.status(404).json({ message: "Not found" });
+    }
+  } else {
     res.sendStatus(403);
   }
 });
 
-router.route("/:sportsmanId").get(verifyToken,async (req, res) => {
-    try {
+router.route("/:sportsmanId").get(verifyToken, async (req, res) => {
+  try {
     const sportsmans = await Sportsman.findById(req.params.sportsmanId);
     if (sportsmans.length !== 0) {
       res.status(200).json(sportsmans);
@@ -104,9 +108,8 @@ router.route("/:sportsmanId").get(verifyToken,async (req, res) => {
   } catch {
     res.status(404).json({ message: "Not found" });
   }
-  
 });
-router.route("/").get(verifyToken,async (req, res) => {
+router.route("/").get(verifyToken, async (req, res) => {
   try {
     const sportsmans = await Sportsman.find({});
     res.status(200).json(sportsmans);
@@ -115,57 +118,58 @@ router.route("/").get(verifyToken,async (req, res) => {
   }
 });
 
-router.route("/:sportsmanId").delete(verifyToken,async (req, res) => {
-  if(req.user.userType === "admin" || req.params.sportsmanId === req.user._id){
+router.route("/:sportsmanId").delete(verifyToken, async (req, res) => {
+  if (
+    req.user.userType === "admin" ||
+    req.params.sportsmanId === req.user._id
+  ) {
     try {
-    const sportsman = await Workout.findById(req.params.sportsmanId);
+      const sportsman = await Workout.findById(req.params.sportsmanId);
       await User.findByIdAndDelete(req.params.sportsmanId);
-    await Sportsman.findByIdAndDelete(req.params.sportsmanId);
-    res.status(204).json({ message: "Deleted succesfully" });
-  } catch {
-    res.status(404).json({ message: "Not found" });
-  }
-  }
-  else{
+      await Sportsman.findByIdAndDelete(req.params.sportsmanId);
+      res.status(204).json({ message: "Deleted succesfully" });
+    } catch {
+      res.status(404).json({ message: "Not found" });
+    }
+  } else {
     res.sendStatus(403);
   }
-  
 });
 
-router.route("/:sportsmanId").put(verifyToken,async (req, res) => {
-  if(req.user.userType === "admin" || req.params.sportsmanId === req.user._id)
-  {
+router.route("/:sportsmanId").put(verifyToken, async (req, res) => {
+  if (
+    req.user.userType === "admin" ||
+    req.params.sportsmanId === req.user._id
+  ) {
     try {
-    const { name, club } = req.body;
+      const { name, club } = req.body;
 
-    const sportsman = await Sportsman.findById(req.params.sportsmanId);
-    if (
-      name === undefined ||
-      club === undefined ||
-      name.trim().length === 0 ||
-      club.trim().length === 0
-    ) {
-      res.status(400).json({
-        message: "All credentials should be not empty!",
-      });
-    } else {
-      const sportsman = await Sportsman.findByIdAndUpdate(
-        req.params.sportsmanId,
-        req.body,
-        {
-          new: true,
-        }
-      );
-      res.status(200).json({ message: "Updated succesfully!" });
+      const sportsman = await Sportsman.findById(req.params.sportsmanId);
+      if (
+        name === undefined ||
+        club === undefined ||
+        name.trim().length === 0 ||
+        club.trim().length === 0
+      ) {
+        res.status(400).json({
+          message: "All credentials should be not empty!",
+        });
+      } else {
+        const sportsman = await Sportsman.findByIdAndUpdate(
+          req.params.sportsmanId,
+          req.body,
+          {
+            new: true,
+          }
+        );
+        res.status(200).json({ message: "Updated succesfully!" });
+      }
+    } catch {
+      res.status(404).json({ message: "User or workout not found" });
     }
-  } catch {
-    res.status(404).json({ message: "User or workout not found" });
-  }
-  }
-  else{
+  } else {
     res.sendStatus(403);
   }
-  
 });
 
 module.exports = router;

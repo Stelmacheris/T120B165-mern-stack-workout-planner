@@ -18,9 +18,18 @@ const NavigationBar = () => {
         <Link to="/home">
           <Navbar.Brand>Workout Planner</Navbar.Brand>
         </Link>
+        <Nav className="me-auto">
+          <Nav.Link>
+            <Link
+              style={{ color: "white", textDecoration: "none" }}
+              to="/measurement"
+            >
+              Mesurements
+            </Link>
+          </Nav.Link>
+        </Nav>
         {user.userType === "admin" ? (
           <Nav className="me-auto">
-            (
             <Nav.Link>
               <Link
                 style={{ color: "white", textDecoration: "none" }}
@@ -29,7 +38,6 @@ const NavigationBar = () => {
                 Sportsmans
               </Link>
             </Nav.Link>
-            )
           </Nav>
         ) : null}
 
