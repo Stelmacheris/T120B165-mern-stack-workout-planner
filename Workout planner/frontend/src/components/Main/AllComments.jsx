@@ -30,7 +30,7 @@ const AllComments = () => {
   const deleteHandler = async (id) => {
     try {
       const response = await axios.delete(
-        `http://13.51.172.212:3000/sportsman/${sportsman._id}/workout/${workout._id}/comments/` +
+        `http://localhost:3000/sportsman/${sportsman._id}/workout/${workout._id}/comments/` +
           id,
         {
           headers: {

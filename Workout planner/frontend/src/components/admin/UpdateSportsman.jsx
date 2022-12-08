@@ -33,7 +33,7 @@ const UpdateSportsman = (props) => {
     ) {
       try {
         const response = await axios.put(
-          "http://13.51.172.212:3000/sportsman/" + id,
+          "http://localhost:3000/sportsman/" + id,
           info,
           {
             headers: {

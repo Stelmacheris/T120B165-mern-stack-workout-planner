@@ -24,7 +24,7 @@ const AddWorkout = () => {
 
     try {
       const response = await axios.post(
-        `http://13.51.172.212:3000/sportsman/${user._id}/workout`,
+        `http://localhost:3000/sportsman/${user._id}/workout`,
         info,
         {
           headers: {

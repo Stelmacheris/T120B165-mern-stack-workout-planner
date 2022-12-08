@@ -30,7 +30,7 @@ const UpdateWorkout = () => {
     if (info.name !== "" && info.link !== "" && info.description !== "") {
       try {
         const response = await axios.put(
-          `http://13.51.172.212:3000/sportsman/${user._id}/workout/` + id,
+          `http://localhost:3000/sportsman/${user._id}/workout/` + id,
           info,
           {
             headers: {

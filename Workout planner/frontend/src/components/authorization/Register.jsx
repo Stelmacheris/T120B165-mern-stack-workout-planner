@@ -14,7 +14,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://13.51.172.212:3000/register",
+        "http://localhost:3000/register",
         registerInfo
       );
       setError(false);

@@ -28,7 +28,7 @@ const WorkoutList = () => {
   const deleteHandler = async (id) => {
     try {
       const response = await axios.delete(
-        `http://13.51.172.212:3000/sportsman/${user._id}/workout/` + id,
+        `http://localhost:3000/sportsman/${user._id}/workout/` + id,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

@@ -4,7 +4,7 @@ const useAxios = (url, method, payload, headers) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState("");
-  axios.defaults.baseURL = "http://13.51.172.212:3000";
+  axios.defaults.baseURL = "http://localhost:3000";
   useEffect(() => {
     const fetchData = async () => {
       try {

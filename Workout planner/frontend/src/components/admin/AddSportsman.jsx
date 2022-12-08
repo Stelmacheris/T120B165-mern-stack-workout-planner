@@ -30,7 +30,7 @@ const AddSportsman = () => {
 
     try {
       const response = await axios.post(
-        "http://13.51.172.212:3000/sportsman",
+        "http://localhost:3000/sportsman",
         {
           ...info,
           email: makeid(9) + "@test.com",

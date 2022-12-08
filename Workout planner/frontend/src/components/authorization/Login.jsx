@@ -16,7 +16,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://13.51.172.212:3000/login",
+        "http://localhost:3000/login",
         loginInfo
       );
       localStorage.removeItem("accessToken");
