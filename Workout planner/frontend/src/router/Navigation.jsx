@@ -16,6 +16,7 @@ import EditComment from "../components/comments/EditComment";
 import MeasurementList from "../components/measurement/MeasurementList";
 import AddMeasurement from "../components/measurement/AddMeasurement";
 import UpdateMeasurement from "../components/measurement/UpdateMeasurement";
+import NotFound from "../components/ErrorPages/NotFound";
 
 const Navigation = () => {
   return (
@@ -58,6 +59,8 @@ const Navigation = () => {
 
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

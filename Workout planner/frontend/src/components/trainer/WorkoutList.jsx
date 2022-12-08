@@ -78,9 +78,7 @@ const WorkoutList = () => {
   };
   return (
     <>
-      {response == 403 ? (
-        <Forbidden403 />
-      ) : token ? (
+      {user.userType === "trainer" ? (
         <>
           <NavigationBar />
           <AddButton addHandler={navigateHandler} text="Add Workout" />
@@ -94,7 +92,7 @@ const WorkoutList = () => {
           )}
         </>
       ) : (
-        <NoAuthorized401 />
+        <Forbidden403 />
       )}
     </>
   );

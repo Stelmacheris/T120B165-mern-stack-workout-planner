@@ -42,3 +42,7 @@
 .right-button {
   animation: 1s ease-out 0s 1 slideInRight;
 }
+
+img {
+  max-width: 15%;
+}

@@ -16,8 +16,10 @@ const SportsmanList = () => {
     Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
   });
 
-  const token = localStorage.getItem("accessToken");
-  const user = jwt_decode(token);
+  const token = localStorage.getItem("accessToken")
+    ? localStorage.getItem("accessToken")
+    : null;
+  const user = token ? jwt_decode(token) : null;
 
   const deleteHandler = async (id) => {
     try {
@@ -73,9 +75,7 @@ const SportsmanList = () => {
 
   return (
     <>
-      {response == 403 ? (
-        <Forbidden403 />
-      ) : token ? (
+      {user.userType === "admin" ? (
         <>
           <NavigationBar />
           <AddButton addHandler={navigateHandler} text="Add Sportsman" />
@@ -89,7 +89,7 @@ const SportsmanList = () => {
           )}
         </>
       ) : (
-        <NoAuthorized401 />
+        <Forbidden403 />
       )}
     </>
   );
