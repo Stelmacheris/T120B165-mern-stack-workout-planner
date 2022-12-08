@@ -10,10 +10,11 @@ const FirstPage = () => {
     ? localStorage.getItem("accessToken")
     : null;
   const user = token ? jwt_decode(token) : null;
-
+  console.log(user);
+  const dateNow = new Date();
   return (
     <>
-      {!user ? (
+      {
         <div className="bg-dark text-center text-white">
           <h1 className="header">WORKOUT PLANNER</h1>
           <div className=" d-flex justify-content-center align-items-center vh-100 vw-100">
@@ -30,9 +31,7 @@ const FirstPage = () => {
             </Link>
           </div>
         </div>
-      ) : (
-        <Navigate to="/home" replace={true} />
-      )}
+      }
     </>
   );
 };

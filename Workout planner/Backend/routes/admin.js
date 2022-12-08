@@ -35,7 +35,7 @@ const isValidRegister = (user) => {
 };
 
 router.route("/").post(verifyToken, async (req, res) => {
-  if (req.user?.userType !== "admin") {
+  if (req.user?.userType === "admin") {
     try {
       const { name, club, username, password, email } = req.body;
       if (

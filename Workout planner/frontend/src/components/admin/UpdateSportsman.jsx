@@ -106,22 +106,6 @@ const UpdateSportsman = (props) => {
                 value={info.club}
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                onChange={(e) => {
-                  setInfo((prevState) => ({
-                    username: prevState.username,
-                    password: e.target.value,
-                    club: prevState.club,
-                    name: prevState.name,
-                  }));
-                }}
-                type="password"
-                placeholder="Password"
-                value={info.password}
-              />
-            </Form.Group>
             <Button variant="primary" type="submit">
               Submit
             </Button>
